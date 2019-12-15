@@ -13,6 +13,7 @@ const App: React.FC<{ data: DataState[] }> = ({ data }) => {
 
   return (
     <div className="chart">
+      <h1>Clicks & Impressions</h1>
       {data && (
         <LineChart
           width={900}

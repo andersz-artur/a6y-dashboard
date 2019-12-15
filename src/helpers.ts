@@ -1,5 +1,5 @@
 import Papa from 'papaparse';
-import {groupBy, uniq} from "lodash-es";
+import {groupBy} from "lodash-es";
 
 import { RawDataState, DataState } from './types';
 

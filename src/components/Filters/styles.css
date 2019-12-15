@@ -1,4 +1,38 @@
 .filters {
     min-width: 30%;
-    background-color: #9ef4e6;
+    background: #e1e6e5;
+    color: #3e403f;
+}
+
+.filters-section .rw-multiselect {
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.filters-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filters-reset {
+    display: block;
+    width: 50px;
+    height: 25px;
+    border: none;
+    background: #7D807F;
+    color: #fff;
+    margin-left: 15px;
+}
+
+.filters-apply {
+    display: block;
+    border: none;
+    background: #7d807f;
+    color: #fff;
+    background: #3e403f;
+    text-transform: uppercase;
+    margin: 15px auto;
+    font-size: 20px;
+    padding: 15px 50px;
 }

@@ -21,6 +21,8 @@ const App: React.FC = () => {
   const [data, setData] = useState<DataState[]>([]);
   const [dataSources, setDataSources] = useState<string[]>([]);
   const [campaigns, setCampaigns] = useState<string[]>([]);
+  const [selectedDataSources, setSelectedDataSources] = useState<string[]>([]);
+  const [selectedCampaigns, setSelectedCampaigns] = useState<string[]>([]);
 
   useEffect(() => {
     setLoading(true);
@@ -45,10 +47,12 @@ const App: React.FC = () => {
     setRawData(data);
   };
 
-  const onFiltersChange = (text: any) => {
-    console.log('change filters!', text);
-    console.log('datasource!', dataSources);
-    console.log('campaigns', campaigns);
+  const handleCampaignsChange = (campaigns: string[]) => {
+    setSelectedCampaigns(campaigns);
+  };
+
+  const onDatasourceChange = (datasources: string[]) => {
+    setSelectedDataSources(datasources);
   };
 
   return (
@@ -59,7 +63,14 @@ const App: React.FC = () => {
         </div>
       ) : (
         <>
-          <Filters applyFilters={onFiltersChange} />
+          <Filters
+            onCampaignsChange={handleCampaignsChange}
+            onDatasourceChange={onDatasourceChange}
+            selectedCampaigns={selectedCampaigns}
+            selectedDataSources={selectedDataSources}
+            dataSources={dataSources}
+            campaigns={campaigns}
+          />
           <ChartArea data={data} />
         </>
       )}
