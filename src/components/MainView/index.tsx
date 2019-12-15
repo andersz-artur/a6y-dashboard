@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './styles.css';
 import { RawDataState, DataState } from '../../types';
@@ -11,16 +11,16 @@ import ChartArea from '../ChartArea';
 const App: React.FC = () => {
   const DATA_URL: string =
     'http://adverity-challenge.s3-website-eu-west-1.amazonaws.com/DAMKBAoDBwoDBAkOBAYFCw.csv';
-  const [isLoading, setLoading] = React.useState<boolean>(false);
-  const [rawData, setRawData] = React.useState<RawDataState[]>([]);
-  const [data, setData] = React.useState<DataState[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(false);
+  const [rawData, setRawData] = useState<RawDataState[]>([]);
+  const [data, setData] = useState<DataState[]>([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setLoading(true);
     fetchRawData();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (rawData && rawData.length) {
       const filteredData = filterData(rawData);
       setData(filteredData);
