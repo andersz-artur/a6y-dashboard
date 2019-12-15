@@ -56,7 +56,12 @@ const App: React.FC = () => {
   };
 
   const handleApplyFilters = () => {
-    console.log('apply filters');
+    const filteredData = filterData(
+      rawData,
+      selectedDataSources,
+      selectedCampaigns
+    );
+    setData(filteredData);
   };
 
   return (

@@ -3,6 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Legend } from 'recharts';
 
+import nodata from '../../nodata.png';
 import './styles.css';
 import { DataState } from '../../types';
 
@@ -14,7 +15,7 @@ const App: React.FC<{ data: DataState[] }> = ({ data }) => {
   return (
     <div className="chart">
       <h1>Clicks & Impressions</h1>
-      {data && (
+      {data && data.length ? (
         <LineChart
           width={900}
           height={400}
@@ -24,7 +25,6 @@ const App: React.FC<{ data: DataState[] }> = ({ data }) => {
           <XAxis
             dataKey="date"
             domain={['dataMin', 'dataMax']}
-            interval={30}
             tickFormatter={formatDate}
           />
           <YAxis
@@ -57,6 +57,11 @@ const App: React.FC<{ data: DataState[] }> = ({ data }) => {
             dot={false}
           />
         </LineChart>
+      ) : (
+        <div className="nodata">
+          <img src={nodata} alt="no data" />
+          <h3>No data matched your criteria</h3>
+        </div>
       )}
     </div>
   );

@@ -5,3 +5,12 @@
     align-self: flex-start;
     flex-flow: column;
 }
+
+.chart .recharts-wrapper {
+    margin: 40px auto;
+}
+
+.nodata {
+    width: 250px;
+    margin: 60px auto;
+}

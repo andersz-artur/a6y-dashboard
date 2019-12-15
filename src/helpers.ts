@@ -10,8 +10,18 @@ export const fetchAndParseCsv = async (url: string): Promise<RawDataState[]> => 
     return parsedCsvData.data.filter(data => !!data.Date);
 };
 
-export const filterData = (rawData: RawDataState[]): DataState[] => {
-    const dataGrouped = groupBy(rawData, element =>  element.Date);
+export const filterData = (rawData: RawDataState[], datasource: string[] = [], campaigns: string[] = []): DataState[] => {
+    let filtered = rawData;
+
+    if (datasource && datasource.length) {
+        filtered = filtered.filter(data => datasource.includes(data.Datasource))
+    }
+
+    if (campaigns && campaigns.length) {
+        filtered = filtered.filter(data => campaigns.includes(data.Campaign))
+    }
+
+    const dataGrouped = groupBy(filtered, element =>  element.Date);
     return Object.entries(dataGrouped).map(([key, value]) => {
         const clicks = value.reduce(
             (acc, current) => acc + Number(current.Clicks),
