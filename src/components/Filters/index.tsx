@@ -5,8 +5,9 @@ import { Multiselect } from 'react-widgets';
 import 'react-widgets/dist/css/react-widgets.css';
 
 const App: React.FC<{
-  onCampaignsChange: any;
-  onDatasourceChange: any;
+  onCampaignsChange: (campaigns: string[]) => void;
+  onDatasourceChange: (datasources: string[]) => void;
+  applyFilters: () => void;
   dataSources: string[];
   campaigns: string[];
   selectedCampaigns: string[];
@@ -14,6 +15,7 @@ const App: React.FC<{
 }> = ({
   onCampaignsChange,
   onDatasourceChange,
+  applyFilters,
   dataSources,
   campaigns,
   selectedCampaigns,
@@ -23,12 +25,7 @@ const App: React.FC<{
     <section className="filters">
       <h2>Filter dimension values</h2>
       <hr />
-      <button
-        className="filters-apply"
-        onClick={() => {
-          // applyFilters(123);
-        }}
-      >
+      <button className="filters-apply" onClick={applyFilters}>
         Apply
       </button>
       <div className="filters-section">

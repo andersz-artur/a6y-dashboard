@@ -51,8 +51,12 @@ const App: React.FC = () => {
     setSelectedCampaigns(campaigns);
   };
 
-  const onDatasourceChange = (datasources: string[]) => {
+  const handleDatasourceChange = (datasources: string[]) => {
     setSelectedDataSources(datasources);
+  };
+
+  const handleApplyFilters = () => {
+    console.log('apply filters');
   };
 
   return (
@@ -65,11 +69,12 @@ const App: React.FC = () => {
         <>
           <Filters
             onCampaignsChange={handleCampaignsChange}
-            onDatasourceChange={onDatasourceChange}
+            onDatasourceChange={handleDatasourceChange}
             selectedCampaigns={selectedCampaigns}
             selectedDataSources={selectedDataSources}
             dataSources={dataSources}
             campaigns={campaigns}
+            applyFilters={handleApplyFilters}
           />
           <ChartArea data={data} />
         </>
