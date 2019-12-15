@@ -1,0 +1,6 @@
+.chart {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-self: center;
+}

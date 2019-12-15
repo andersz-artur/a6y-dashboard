@@ -1,0 +1,12 @@
+.box {
+    display: flex;
+    justify-content: space-between;
+    max-width: 70%;
+    margin: 2rem auto;
+    min-height: 600px;
+    background: #f1f6f5;
+}
+
+.loading {
+    margin: 100px auto;
+}
