@@ -1,5 +1,5 @@
 import Papa from 'papaparse';
-import {groupBy} from "lodash-es";
+import {groupBy, uniq} from "lodash-es";
 
 import { RawDataState, DataState } from './types';
 
@@ -7,7 +7,7 @@ export const fetchAndParseCsv = async (url: string): Promise<RawDataState[]> => 
     const response = await fetch(url);
     const text = await response.text();
     const parsedCsvData = Papa.parse(text, { header: true });
-    return parsedCsvData.data;
+    return parsedCsvData.data.filter(data => !!data.Date);
 };
 
 export const filterData = (rawData: RawDataState[]): DataState[] => {
@@ -23,4 +23,14 @@ export const filterData = (rawData: RawDataState[]): DataState[] => {
         );
         return { date: key, clicks, impressions };
     });
+};
+
+export const getDataSources = (rawData: RawDataState[]): string[] => {
+    const groupedByDatasource = groupBy(rawData, element =>  element.Datasource);
+    return  Object.keys(groupedByDatasource);
+};
+
+export const getCampaigns = (rawData: RawDataState[]): string[] => {
+    const groupedByCampaign = groupBy(rawData, element =>  element.Campaign);
+    return  Object.keys(groupedByCampaign);
 };

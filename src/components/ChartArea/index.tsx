@@ -1,7 +1,7 @@
 import React from 'react';
 
 import moment from 'moment';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Legend } from 'recharts';
 
 import './styles.css';
 import { DataState } from '../../types';
@@ -40,6 +40,7 @@ const App: React.FC<{ data: DataState[] }> = ({ data }) => {
             tickFormatter={data => `${data / 1000}k`}
           />
           <CartesianGrid strokeDasharray="3 3" />
+          <Legend />
           <Line
             yAxisId="1"
             type="monotone"

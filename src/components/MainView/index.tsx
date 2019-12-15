@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 
 import './styles.css';
 import { RawDataState, DataState } from '../../types';
-import { fetchAndParseCsv, filterData } from '../../helpers';
+import {
+  fetchAndParseCsv,
+  filterData,
+  getDataSources,
+  getCampaigns
+} from '../../helpers';
 
 import loader from '../../loader.gif';
 import Filters from '../Filters';
@@ -14,6 +19,8 @@ const App: React.FC = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [rawData, setRawData] = useState<RawDataState[]>([]);
   const [data, setData] = useState<DataState[]>([]);
+  const [dataSources, setDataSources] = useState<string[]>([]);
+  const [campaigns, setCampaigns] = useState<string[]>([]);
 
   useEffect(() => {
     setLoading(true);
@@ -23,7 +30,12 @@ const App: React.FC = () => {
   useEffect(() => {
     if (rawData && rawData.length) {
       const filteredData = filterData(rawData);
+      const dataSources = getDataSources(rawData);
+      const campaigns = getCampaigns(rawData);
+
       setData(filteredData);
+      setDataSources(dataSources);
+      setCampaigns(campaigns);
       setLoading(false);
     }
   }, [rawData]);
@@ -35,6 +47,8 @@ const App: React.FC = () => {
 
   const onFiltersChange = (text: any) => {
     console.log('change filters!', text);
+    console.log('datasource!', dataSources);
+    console.log('campaigns', campaigns);
   };
 
   return (
