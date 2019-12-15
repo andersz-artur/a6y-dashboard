@@ -4,8 +4,9 @@ import moment from 'moment';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
 
 import './styles.css';
+import { DataState } from '../../types';
 
-const App: React.FC<{ data: [] }> = ({ data }) => {
+const App: React.FC<{ data: DataState[] }> = ({ data }) => {
   const formatDate = (dateText: string) => {
     return moment(dateText, 'DD.MM.YYYY').format('DD.MMM');
   };

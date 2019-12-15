@@ -1,60 +1,40 @@
 import React from 'react';
-// @ts-ignore
-import Papa from 'papaparse';
-// @ts-ignore
-import { groupBy } from 'lodash-es';
 
 import './styles.css';
+import { RawDataState, DataState } from '../../types';
+import { fetchAndParseCsv, filterData } from '../../helpers';
 
 import loader from '../../loader.gif';
 import Filters from '../Filters';
 import ChartArea from '../ChartArea';
 
 const App: React.FC = () => {
-  let getData: () => Promise<void>;
-  const dataUrl: string =
+  const DATA_URL: string =
     'http://adverity-challenge.s3-website-eu-west-1.amazonaws.com/DAMKBAoDBwoDBAkOBAYFCw.csv';
-  const [isLoading, setLoading] = React.useState(false);
-  const [data, setData] = React.useState<[]>([]);
+  const [isLoading, setLoading] = React.useState<boolean>(false);
+  const [rawData, setRawData] = React.useState<RawDataState[]>([]);
+  const [data, setData] = React.useState<DataState[]>([]);
 
   React.useEffect(() => {
-    console.log('did mount');
-    console.log('Papa', Papa);
-    getData();
+    setLoading(true);
+    fetchRawData();
   }, []);
 
-  getData = async () => {
-    setLoading(true);
-    const response = await fetch(dataUrl);
-    const text = await response.text();
-    const parsedCsvData = Papa.parse(text, { header: true });
-    console.log(parsedCsvData);
+  React.useEffect(() => {
+    if (rawData && rawData.length) {
+      const filteredData = filterData(rawData);
+      setData(filteredData);
+      setLoading(false);
+    }
+  }, [rawData]);
 
-    const dataGrouped = groupBy(parsedCsvData.data, (element: any) => {
-      // console.log('element', element);
-      return element.Date;
-    });
+  const fetchRawData = async () => {
+    const data = await fetchAndParseCsv(DATA_URL);
+    setRawData(data);
+  };
 
-    const entires = Object.entries(dataGrouped);
-
-    const data = entires.map((element: Array<any>) => {
-      const clicks = element[1].reduce(
-        (acc: any, current: any) => acc + Number(current.Clicks),
-        0
-      );
-      const impressions = element[1].reduce(
-        (acc: any, current: any) => acc + Number(current.Impressions),
-        0
-      );
-      return { date: element[0], clicks, impressions };
-    });
-
-    // console.log('dataGrouped', dataGrouped);
-    console.log('data', data);
-
-    // @ts-ignore
-    setData(data);
-    setLoading(false);
+  const onFiltersChange = (text: any) => {
+    console.log('change filters!', text);
   };
 
   return (
@@ -65,7 +45,7 @@ const App: React.FC = () => {
         </div>
       ) : (
         <>
-          <Filters />
+          <Filters applyFilters={onFiltersChange} />
           <ChartArea data={data} />
         </>
       )}
