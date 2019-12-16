@@ -49,5 +49,10 @@
   "prettier": {
     "singleQuote": true,
     "useTabs": false
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!lodash-es)"
+    ]
   }
 }
